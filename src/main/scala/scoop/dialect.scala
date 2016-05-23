@@ -31,7 +31,8 @@ trait BaseSqlDialect extends SqlDialect {
     (n match {
       case q: ast.Query[_] => 
         // select
-        "SELECT" <+> csv(q.sel.expressions map aliasedSql) <>
+		val selectKeyWord = if (q.selectDistinct) "SELECT DISTINCT" else "SELECT"
+		selectKeyWord <+> csv(q.sel.expressions map aliasedSql) <>
         // from
         opt( q.from.map(queryable => line <> "FROM" <+> aliasedSql(queryable) ) ) <> 
         // joins
