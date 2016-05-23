@@ -67,7 +67,7 @@ case class QueryBuilder(
   forUpdateLock: Boolean              = false
 ) extends QueryBuilderBase {
   def find [B](selection: Selection[B])(implicit c: Connection, dialect: SqlDialect): QueryResult[B] = buildQuery(selection) process selection
-  def findDistinct [B](selection: Selection[B])(implicit c: Connection, dialect: SqlDialect): QueryResult[B] = buildQuery(selection).distinct process selection
+  def findDistinct [B](selection: Selection[B])(implicit c: Connection, dialect: SqlDialect): QueryResult[B] = buildQuery(selection) process selection
 
   def innerJoin (join: JoinBuilder) = copy(joins = joins ++ List(join.build(ast.JoinType.Inner)))
   def leftJoin (join: JoinBuilder)  = copy(joins = joins ++ List(join.build(ast.JoinType.Left)))
